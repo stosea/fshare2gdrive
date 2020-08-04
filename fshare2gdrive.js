@@ -171,7 +171,7 @@ async function login(username, password) {
 	}
 }
 
-async function transfer(fshare_file, remote_drive, remote_path) {
+async function transfer(fshare_file, remote_drive, remote_path, config_file) {
 	fshare_file = fshare_file.match(/https*.+?\/file\/\w+/)[0]
 	// let fshare_folder = args[0].match(/http\s*:.+?\/folder\/\w+/)[0]
 	let options = {
@@ -194,7 +194,7 @@ async function transfer(fshare_file, remote_drive, remote_path) {
 			console.log(fshare_download_url)
 		} else {
 			rclone_path = `"${remote_drive}":"${remote_path.replace(/\/$/,'')}/${file_name}"`
-			transfer_cmd = `curl -s "${fshare_download_url}" | rclone rcat --stats-one-line -P --stats 2s ${rclone_path}`
+			transfer_cmd = `curl -s "${fshare_download_url}" | rclone rcat --config="${config_file}"--stats-one-line -P --stats 2s ${rclone_path}`
 			console.error(GREEN, `Uploading ${fshare_file} to rclone path ${rclone_path}. Please wait...`)
 			console.log(transfer_cmd)
 		}
@@ -253,7 +253,7 @@ async function genCmd(fshare_folder, remote_drive, remote_path, page=1, is_root_
 			process.exit(0)
 		} else {
 			await checkLogin()
-			await transfer(args[0], args[1], args[2])
+			await transfer(args[0], args[1], args[2], args[3])
 			process.exit(0)
 		}
 	} else if (args[0] === "login"){
