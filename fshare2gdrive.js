@@ -229,7 +229,7 @@ async function genCmd(fshare_folder, remote_drive, remote_path, page=1, is_root_
 			if (!listExist.some(x=>item.name === x))
 			{
 				if (item.type === 1) {
-					let cmd = `node index.js "https://fshare.vn/file/${item.linkcode}" "${remote_drive}" "${remote_path.replace(/\/$/,'')}" | bash -s`
+					let cmd = `curl -s https://raw.githubusercontent.com/nnt1/fshare2gdrive/dev/fshare2gdrive.js | tail -n+2 | node - "https://fshare.vn/file/${item.linkcode}" "${remote_drive}" "${remote_path.replace(/\/$/,'')}/${(is_root_folder ? body.current.name + '/' : '')}" | bash -s`
 					console.log(cmd)
 				}	else {
 					item_folder = `https://fshare.vn/folder/${item.linkcode}`
