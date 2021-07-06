@@ -238,7 +238,7 @@ async function genCmd(fshare_folder, remote_drive, remote_path, page=1, is_root_
 			}
 			else
 			{
-				console.error(GREEN, `${item.name} is exist.`)
+				//console.error(GREEN, `${item.name} is exist.`)
 			}
 		})
 		await Promise.all(promises)
