@@ -221,7 +221,6 @@ async function genCmd(fshare_folder, remote_drive, remote_path, page=1, is_root_
 		const body = await request(options, false)
 
 		const rclone_path = `"${remote_drive}":"${remote_path.replace(/\/$/,'')}"`
-
 		const data = await execShellCommand(`rclone lsf -R --format p --files-only ${rclone_path}`)
 		const listExist = data.split(/\r?\n/)
 
@@ -236,6 +235,10 @@ async function genCmd(fshare_folder, remote_drive, remote_path, page=1, is_root_
 					item_path = `${remote_path.replace(/\/$/,'')}/${body.current.name}/${item.name}/`
 					await genCmd(item_folder, remote_drive, item_path, 1, false)
 				}
+			}
+			else
+			{
+				console.error(GREEN, `${item.name} is exist.`)
 			}
 		})
 		await Promise.all(promises)
