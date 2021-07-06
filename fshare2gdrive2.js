@@ -230,7 +230,6 @@ async function genCmd(fshare_folder, remote_drive, remote_path, page=1, is_root_
 			}
 		})
         await Promise.all(promises)
-        console.error(GREEN, `Go to next page`)
 		if (body._links.last !== undefined) {
 			await genCmd(fshare_folder, remote_drive, remote_path, page+1)
 		}
