@@ -197,9 +197,16 @@ async function transfer(fshare_file, remote_drive, remote_path) {
 		fshare_download_url = body.location
 		file_name = decodeURI(fshare_download_url.match(/http.+\/(.+?)$/)[1])
 
+		const listExist = []
 		const rclone_path = `"${remote_drive}":"${remote_path.replace(/\/$/,'')}"`
-		const remoteList = await execShellCommand(`rclone lsf -R --format p --files-only ${rclone_path}`)
-		const listExist = remoteList.split(/\r?\n/)
+		try {
+			
+			const remoteList = await execShellCommand(`rclone lsf -R --format p --files-only ${rclone_path}`)
+			listExist = remoteList.split(/\r?\n/)
+		} catch (error) {
+			console.error(RED, error)
+		}
+		
 
 		if (listExist.some(x=>file_name === x))
 		{
