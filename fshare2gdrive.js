@@ -197,7 +197,7 @@ async function transfer(fshare_file, remote_drive, remote_path) {
 		fshare_download_url = body.location
 		file_name = decodeURI(fshare_download_url.match(/http.+\/(.+?)$/)[1])
 
-		const listExist = []
+		let listExist = []
 		const rclone_path = `"${remote_drive}":"${remote_path.replace(/\/$/,'')}"`
 		try {
 			
